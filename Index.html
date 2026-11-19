@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sistem Bimbingan Skripsi</title>
+<meta name="description" content="Sistem Bimbingan Skripsi dan Artikel">
+<meta name="author" content="Fahmi Yusuf">
+<meta name="theme-color" content="#102A43">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F2B33D'/%3E%3Cg fill='none' stroke='%23102A43' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 27l22-11 22 11-22 11z'/%3E%3Cpath d='M19 32v11c0 3 6 7 13 7s13-4 13-7V32'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #F3F6FA; overflow: hidden; }
+  #app {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    border: 0; display: block; background: #F3F6FA;
+  }
+  #splash {
+    position: fixed; inset: 0; z-index: 10; background: #102A43; color: #FFFFFF;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+    font-family: Inter, system-ui, sans-serif; text-align: center; padding: 24px; box-sizing: border-box;
+    transition: opacity .35s ease;
+  }
+  #splash.hide { opacity: 0; pointer-events: none; }
+  .logo { width: 72px; height: 72px; border-radius: 18px; background: #F2B33D; display: flex; align-items: center; justify-content: center; }
+  .title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 24px; }
+  .sub { font-size: 14px; color: #B7C7D9; }
+  .spin { width: 26px; height: 26px; border: 3px solid rgba(255,255,255,.25); border-top-color: #F2B33D; border-radius: 50%; animation: sp .8s linear infinite; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+  .credit { position: absolute; bottom: 20px; left: 0; right: 0; font-size: 12px; color: #B7C7D9; }
+  .credit b { color: #FFFFFF; }
+  .fallback { display: none; font-size: 13px; color: #D8E2EE; max-width: 340px; line-height: 1.5; }
+  .fallback a { color: #F2B33D; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div id="splash" role="status" aria-live="polite">
+  <div class="logo" aria-hidden="true">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#102A43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+  </div>
+  <div class="title">Sistem Bimbingan Skripsi</div>
+  <div class="spin" aria-hidden="true"></div>
+  <div class="sub">Memuat aplikasi...</div>
+  <div class="fallback" id="fallback">Aplikasi belum tampil? <a id="directLink" href="#" target="_blank" rel="noopener">Buka langsung di sini</a></div>
+  <div class="credit">Dibuat oleh <b>Fahmi Yusuf</b></div>
+</div>
+
+<iframe id="app" title="Sistem Bimbingan Skripsi" allow="clipboard-write"></iframe>
+
+<script>
+  /* =====================================================
+     GANTI LINK DI BAWAH dengan URL aplikasi web Apps Script
+     (yang berakhiran /exec), lalu simpan.
+     ===================================================== */
+  var APP_URL = 'https://script.google.com/macros/s/AKfycbzc57nBT6tnTxoG0KkgdscboLfBdoVr5bIvKzfU7PT7yKDBx3M_zQKL4N6agw1_Ti26/exec';
+
+  var frame = document.getElementById('app');
+  var splash = document.getElementById('splash');
+  var fallback = document.getElementById('fallback');
+  document.getElementById('directLink').href = APP_URL;
+
+  if (APP_URL.indexOf('GANTI_DENGAN') !== -1) {
+    document.querySelector('.sub').textContent = 'Link aplikasi belum diisi di file index.html.';
+    document.querySelector('.spin').style.display = 'none';
+  } else {
+    frame.src = APP_URL;
+    frame.addEventListener('load', function () {
+      setTimeout(function () { splash.classList.add('hide'); }, 300);
+    });
+    setTimeout(function () { fallback.style.display = 'block'; }, 12000);
+  }
+</script>
+</body>
+</html>
